@@ -39,6 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const transactionsRef = ref(db, "transactions");
 
   onValue(transactionsRef, (snapshot) => {
+    console.log("fetched snapshot:", snapshot.val());
     const data = snapshot.val();
     tbody.innerHTML = "";
 
