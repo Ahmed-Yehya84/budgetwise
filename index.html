@@ -7,15 +7,15 @@
       http-equiv="Content-Security-Policy"
       content="
   default-src 'self';
-  script-src 'self' 'unsafe-inline'; <!-- 'unsafe-inline' might still be needed for some inline scripts, but try to avoid if possible -->
+  script-src 'self' 'unsafe-inline';
   connect-src 'self'
     https://*.firebaseio.com
     https://*.firebasedatabase.app
     https://*.googleapis.com
-    https://securetoken.googleapis.com; <!-- Needed for Auth -->
+    https://securetoken.googleapis.com;
   img-src 'self' data:;
   style-src 'self' 'unsafe-inline';
-  font-src 'self' https://fonts.gstatic.com;
+  font-src 'self' https://fonts.gstatic.com data:;
 "
     />
 
