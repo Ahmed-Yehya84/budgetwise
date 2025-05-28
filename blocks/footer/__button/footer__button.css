@@ -1,0 +1,9 @@
+.footer__button {
+  margin: 0.3rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}

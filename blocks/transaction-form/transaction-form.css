@@ -1,0 +1,7 @@
+.transaction-form {
+  background-color: #fff;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}

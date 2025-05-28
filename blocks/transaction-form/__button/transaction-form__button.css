@@ -1,0 +1,9 @@
+.transaction-form__button {
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #4caf50;
+  color: white;
+  /* border: none; */
+  cursor: pointer;
+}

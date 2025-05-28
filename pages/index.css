@@ -1,0 +1,40 @@
+/* root */
+@import url(../blocks/root/root.css);
+
+/* header */
+@import url(../blocks/header/header.css);
+@import url(../blocks/header/__title/header__title.css);
+@import url(../blocks/header/__tagline/header__tagline.css);
+
+/* transaction-form */
+@import url(../blocks/transaction-form/transaction-form.css);
+@import url(../blocks/transaction-form/__title/transaction-form__title.css);
+@import url(../blocks/transaction-form/__input/transaction-form__input.css);
+@import url(../blocks/transaction-form/__form/transaction-form__form.css);
+@import url(../blocks/transaction-form/__select/transaction-form__select.css);
+@import url(../blocks/transaction-form/__button/transaction-form__button.css);
+
+/* transactions */
+
+@import url(../blocks/transactions/transactions.css);
+@import url(../blocks/transactions/__title/transactions__title.css);
+@import url(../blocks/transactions/__table/transaction__table.css);
+@import url(../blocks/transactions/__td/transaction__td.css);
+@import url(../blocks/transactions/__th/transactions__th.css);
+
+/* charts */
+@import url(../blocks/charts/charts.css);
+@import url(../blocks/charts/__title/charts__title.css);
+@import url(../blocks/charts/__bar/charts__bar.css);
+@import url(../blocks/charts/__pie/charts__pie.css);
+
+/* summary */
+
+@import url(../blocks/summary/summary.css);
+@import url(../blocks/summary/__card/summary__card.css);
+
+/* footer */
+
+@import url(../blocks/footer/footer.css);
+@import url(../blocks/footer/__button/footer__button.css);
+@import url(../blocks/footer/__credit/footer__credit.css);
