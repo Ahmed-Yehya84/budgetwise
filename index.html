@@ -22,18 +22,20 @@
       <h2 class="transaction-form__title">Add New Transaction</h2>
       <form id="transaction-form" class="transaction-form__form">
         <input
+          id="description"
           class="transaction-form__input"
           type="text"
           placeholder="Description"
           required
         />
         <input
+          id="amount"
           class="transaction-form__input"
           type="number"
           placeholder="Amount"
           required
         />
-        <select class="transaction-form__select">
+        <select id="type" class="transaction-form__select">
           <option value="income">Income</option>
           <option value="expense">Expense</option>
         </select>

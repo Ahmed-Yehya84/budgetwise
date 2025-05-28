@@ -1,0 +1,11 @@
+.transactions__delete-button {
+  padding: 0.3rem 0.6rem;
+  background-color: #e53935;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.transactions__delete-button:hover {
+  background-color: #c62828;
+}
