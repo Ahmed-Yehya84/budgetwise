@@ -1,60 +1,46 @@
-# 💰 BudgetWise
+# BudgetWise 💰
 
-**BudgetWise** is a clean, beginner-friendly personal finance tracker designed to help users **monitor income, expenses, and overall balance** through a simple, intuitive interface.
+BudgetWise is a simple and responsive budget tracker that lets you add, view, and delete your income and expenses in real time. All data is stored and retrieved using Firebase Realtime Database.
 
-## 🔍 Overview
+## 🚀 Features
 
-With BudgetWise, users can:
+- Add income and expenses with descriptions and timestamps.
+- Real-time display of transactions.
+- Live balance, total income, and total expenses calculations.
+- Delete transactions with confirmation popup (SweetAlert2).
+- Toast notifications for success and error feedback (Toastify).
+- Fully responsive and user-friendly UI.
+- Hosted via GitHub Pages.
 
-- 🧾 Add and categorize transactions (income or expenses)
-- 📊 View summaries of total balance, income, and expenses
-- 📉 Visualize financial trends via pie and bar charts
-- 📅 Track spending over time with a date-based log
-- 💾 Export data or reset all entries
-- 🌓 Switch between light/dark themes (planned)
+## 🛠️ Technologies
 
-The app runs entirely in the browser — **no backend or login required**.
+- HTML5 / CSS3
+- JavaScript (ES6+)
+- Firebase Realtime Database
+- Webpack
+- Toastify JS
+- SweetAlert2
 
-## 🛠 Tech Stack
+## 📦 Installation
 
-- **HTML5** – semantic structure using [BEM methodology](http://getbem.com/)
-- **CSS3** – modern, responsive styling with Flexbox and box shadows
-- **JavaScript** _(planned)_ – interactivity for dynamic updates, charts, and storage
-- _(Future enhancement)_: Chart.js or D3.js for rendering interactive graphs
+1. Clone the repo:
 
-## 📁 File Structure
+   ```bash
+   git clone https://github.com/your-username/budgetwise.git
+   cd budgetwise
+   ```
 
-/index.html
-/style.css
-/app.js ← (optional, coming soon)
-/README.md
+2. Install dependencies:
 
-## 🧱 BEM Structure Example
+   npm install
 
-```html
-<section class="transaction-form">
-  <form class="transaction-form__form">
-    <input class="transaction-form__input" />
-    <button class="transaction-form__button">Add</button>
-  </form>
-</section>
-```
+3.Start development server:
 
-🚀 Getting Started
-Clone or download the repository
+    npm start
 
-Open index.html in your browser
+🧪 Testing
+Transactions are saved and loaded via Firebase.
 
-Start logging your transactions!
+Toastify will display success and error messages.
 
-📌 Coming Soon
-Persistent data with localStorage
-
-Chart visualizations
-
-Theme toggle (light/dark mode)
-
-Advanced filters and sorting
-
-👨‍💻
-Built with 💚 by Ahmed Abdelkhalek — a simple solution for everyday budgeting.
+SweetAlert2 prompts before deleting transactions.
