@@ -6,6 +6,9 @@
 @import url(../blocks/header/__title/header__title.css);
 @import url(../blocks/header/__tagline/header__tagline.css);
 
+/* auth-section */
+@import url(../blocks/auth-section/auth-section.css);
+
 /* transaction-form */
 @import url(../blocks/transaction-form/transaction-form.css);
 @import url(../blocks/transaction-form/__title/transaction-form__title.css);

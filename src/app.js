@@ -2,6 +2,141 @@ import { db } from "./firebase.js";
 import { ref, push, onValue, remove } from "firebase/database";
 import { showConfirmDialog } from "./notifications.js";
 import { showSuccessToast, showErrorToast } from "./toast.js";
+import {
+  getAuth,
+  onAuthStateChanged,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
+
+const auth = getAuth(app);
+
+// DOM Elements
+const loginSection = document.getElementById("login-section");
+const signupSection = document.getElementById("signup-section");
+const appSection = document.getElementById("app");
+
+const logoutButton = document.getElementById("logout-button");
+
+const showLoginLink = document.getElementById("show-login");
+const showSignupLink = document.getElementById("show-signup");
+
+// Toggle views based on user login state
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is logged in
+    loginSection.style.display = "none";
+    signupSection.style.display = "none";
+    appSection.style.display = "block";
+    logoutButton.style.display = "inline-block";
+  } else {
+    // User is not logged in
+    loginSection.style.display = "block";
+    signupSection.style.display = "none";
+    appSection.style.display = "none";
+    logoutButton.style.display = "none";
+  }
+});
+
+if (showLoginLink && showSignupLink) {
+  showLoginLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    signupSection.style.display = "none";
+    loginSection.style.display = "block";
+  });
+
+  showSignupLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    loginSection.style.display = "none";
+    signupSection.style.display = "block";
+  });
+}
+
+document.getElementById("show-signup").addEventListener("click", (e) => {
+  e.preventDefault();
+  loginSection.style.display = "none";
+  signupSection.style.display = "block";
+});
+
+document.getElementById("show-login").addEventListener("click", (e) => {
+  e.preventDefault();
+  signupSection.style.display = "none";
+  loginSection.style.display = "block";
+});
+
+// logout
+
+logoutButton.addEventListener("click", () => {
+  signOut(auth)
+    .then(() => {
+      Toastify({
+        text: "Successfully logged out.",
+        duration: 3000,
+        gravity: "top",
+        position: "center",
+        style: { background: "linear-gradient(to right, #FF416C, #FF4B2B)" },
+      }).showToast();
+    })
+    .catch((error) => {
+      Toastify({
+        text: "Error logging out.",
+        duration: 3000,
+        gravity: "top",
+        position: "center",
+        style: { background: "linear-gradient(to right, #FF5F6D, #FFC371)" },
+      }).showToast();
+      console.error(error);
+    });
+});
+
+// Auth State Listener
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    loginSection.style.display = "none";
+    signupSection.style.display = "none";
+    appSection.style.display = "block";
+  } else {
+    loginSection.style.display = "block";
+    signupSection.style.display = "none";
+    appSection.style.display = "none";
+  }
+});
+
+// Signup form
+const signupForm = document.getElementById("signup-form");
+
+signupForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById("signup-email").value;
+  const password = document.getElementById("signup-password").value;
+
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      Toastify({
+        text: "Signup successful! You are now logged in.",
+        duration: 3000,
+        gravity: "top",
+        position: "center",
+        style: { background: "#4caf50" },
+      }).showToast();
+
+      // Show app and hide signup/login
+      document.getElementById("signup-section").style.display = "none";
+      document.getElementById("login-section").style.display = "none";
+      document.getElementById("app").style.display = "block";
+    })
+    .catch((error) => {
+      Toastify({
+        text: error.message,
+        duration: 4000,
+        gravity: "top",
+        position: "center",
+        style: { background: "#f44336" },
+      }).showToast();
+    });
+});
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("transaction-form");
