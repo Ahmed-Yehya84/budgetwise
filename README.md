@@ -38,6 +38,9 @@ BudgetWise is a simple and responsive budget tracker that lets you add, view, an
 
     npm start
 
+🔥 Firebase Setup
+Update firebase.js with your Firebase project credentials and ensure the Realtime Database is enabled.
+
 🧪 Testing
 Transactions are saved and loaded via Firebase.
 
