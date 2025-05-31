@@ -1,5 +1,7 @@
 import { db } from "./firebase.js";
 import { ref, push, onValue, remove } from "firebase/database";
+import { showConfirmDialog } from "./notifications.js";
+import { showSuccessToast, showErrorToast } from "./toast.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("transaction-form");
@@ -27,11 +29,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const transactionsRef = ref(db, "transactions");
     push(transactionsRef, transaction)
       .then(() => {
-        alert("Transaction saved!");
+        showSuccessToast("Transaction saved!");
+
         form.reset();
       })
       .catch((error) => {
         console.error("Error saving transaction:", error);
+        showErrorToast("Error saving transaction");
       });
   });
 
@@ -48,7 +52,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (data) {
       Object.entries(data).forEach(([key, tx]) => {
-        // Sum incomes and expenses
         if (tx.type === "income") {
           totalIncome += tx.amount;
         } else if (tx.type === "expense") {
@@ -57,20 +60,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const row = document.createElement("tr");
         row.innerHTML = `
-          <td class="transactions__td">${tx.description}</td>
-          <td class="transactions__td">${tx.amount.toFixed(2)}</td>
-          <td class="transactions__td">${tx.type}</td>
-          <td class="transactions__td">${new Date(
-            tx.timestamp
-          ).toLocaleDateString()}</td>
-          <td class="transactions__td">
-            <button class="transactions__delete-button" data-id="${key}">🗑️ Delete</button>
-          </td>
-        `;
+        <td class="transactions__td">${tx.description}</td>
+        <td class="transactions__td">${tx.amount.toFixed(2)}</td>
+        <td class="transactions__td">${tx.type}</td>
+        <td class="transactions__td">${new Date(
+          tx.timestamp
+        ).toLocaleDateString()}</td>
+        <td class="transactions__td">
+          <button class="transactions__delete-button" data-id="${key}">🗑️ Delete</button>
+        </td>
+      `;
         tbody.appendChild(row);
       });
 
-      // 🧮 Update totals in the DOM
       document.getElementById("total-income").textContent =
         totalIncome.toFixed(2);
       document.getElementById("total-expenses").textContent =
@@ -79,18 +81,29 @@ document.addEventListener("DOMContentLoaded", () => {
         totalIncome - totalExpenses
       ).toFixed(2);
 
-      // Add event listeners for Delete buttons
       document
         .querySelectorAll(".transactions__delete-button")
         .forEach((button) => {
           button.addEventListener("click", () => {
             const key = button.getAttribute("data-id");
-            if (!confirm("Are you sure you want to delete this transaction?"))
-              return;
-            const transactionRef = ref(db, `transactions/${key}`);
-            remove(transactionRef)
-              .then(() => console.log(`Deleted transaction: ${key}`))
-              .catch((error) => console.error("Delete failed:", error));
+
+            showConfirmDialog({
+              title: "Are you sure?",
+              text: "This transaction will be permanently deleted!",
+              confirmButtonText: "Yes, delete it!",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                const transactionRef = ref(db, `transactions/${key}`);
+                remove(transactionRef)
+                  .then(() =>
+                    showSuccessToast("Transaction deleted successfully!")
+                  )
+                  .catch((error) => {
+                    showErrorToast("Delete failed!");
+                    console.error("Delete failed:", error);
+                  });
+              }
+            });
           });
         });
     } else {
