@@ -3,6 +3,7 @@ import { ref, push, onValue, remove } from "firebase/database";
 import { onAuthStateChanged } from "firebase/auth";
 import { showConfirmDialog } from "./notifications.js";
 import { showSuccessToast, showErrorToast } from "./toast.js";
+import { renderExpensesChart } from "./chart";
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("transaction-form");
@@ -65,6 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
       let totalIncome = 0;
       let totalExpenses = 0;
 
+      const transactions = [];
+
       if (data) {
         Object.entries(data).forEach(([key, tx]) => {
           // Defensive check
@@ -76,6 +79,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
           if (tx.type === "income") totalIncome += tx.amount;
           if (tx.type === "expense") totalExpenses += tx.amount;
+
+          allTransactions.push(tx);
 
           const row = document.createElement("tr");
           row.innerHTML = `
@@ -100,6 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
           totalIncome - totalExpenses
         ).toFixed(2);
 
+        // Attach delete handlers
         document
           .querySelectorAll(".transactions__delete-button")
           .forEach((button) => {
@@ -128,11 +134,17 @@ document.addEventListener("DOMContentLoaded", () => {
               });
             });
           });
+
+        // ✅ Render updated chart
+        renderExpensesChart(transactions);
       } else {
         tbody.innerHTML = `<tr><td colspan="5" class="transactions__td">No transactions found.</td></tr>`;
         document.getElementById("total-income").textContent = "0.00";
         document.getElementById("total-expenses").textContent = "0.00";
         document.getElementById("balance").textContent = "0.00";
+
+        // Empty chart if no data
+        renderExpensesChart([]);
       }
     });
   });
