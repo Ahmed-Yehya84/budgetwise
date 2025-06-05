@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const description = document.getElementById("description");
   const amount = document.getElementById("amount");
   const type = document.getElementById("type");
+  const dateInput = document.getElementById("date");
   const category = document.getElementById("category");
   const tbody = document.getElementById("transaction-list");
 
@@ -36,10 +37,11 @@ document.addEventListener("DOMContentLoaded", () => {
         amount: parseFloat(amount.value),
         type: type.value,
         category: category.value,
-        timestamp: Date.now(),
+        timestamp: dateInput.value
+          ? new Date(dateInput.value).getTime()
+          : Date.now(),
       };
 
-      // Defensive checks
       if (
         !transaction.description ||
         isNaN(transaction.amount) ||
@@ -60,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Read and display transactions
+    // Read and display transactions (sorted by date)
     onValue(userTransactionsRef, (snapshot) => {
       const data = snapshot.val();
       tbody.innerHTML = "";
@@ -71,8 +73,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const transactions = [];
 
       if (data) {
-        Object.entries(data).forEach(([key, tx]) => {
-          // Defensive check
+        const sortedEntries = Object.entries(data).sort(([, a], [, b]) => {
+          return a.timestamp - b.timestamp; // Ascending (oldest to newest)
+        });
+
+        sortedEntries.forEach(([key, tx]) => {
           if (
             typeof tx.amount !== "number" ||
             !["income", "expense"].includes(tx.type)
@@ -86,13 +91,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
           const row = document.createElement("tr");
           row.innerHTML = `
-          <td class="transactions__td">${new Date(
-            tx.timestamp
-          ).toLocaleDateString()}</td>
+            <td class="transactions__td">${new Date(
+              tx.timestamp
+            ).toLocaleDateString()}</td>
             <td class="transactions__td">${tx.description}</td>
             <td class="transactions__td">${tx.amount.toFixed(2)}</td>
-           <td class="transactions__td">${tx.category || "—"}</td>
-            
+            <td class="transactions__td">${tx.category || "—"}</td>
             <td class="transactions__td">
               <button class="transactions__delete-button" data-id="${key}">🗑️ Delete</button>
             </td>
@@ -108,7 +112,6 @@ document.addEventListener("DOMContentLoaded", () => {
           totalIncome - totalExpenses
         ).toFixed(2);
 
-        // Attach delete handlers
         document
           .querySelectorAll(".transactions__delete-button")
           .forEach((button) => {
@@ -138,15 +141,12 @@ document.addEventListener("DOMContentLoaded", () => {
             });
           });
 
-        // ✅ Render updated chart
         renderExpensesChart(transactions);
       } else {
         tbody.innerHTML = `<tr><td colspan="5" class="transactions__td">No transactions found.</td></tr>`;
         document.getElementById("total-income").textContent = "0.00";
         document.getElementById("total-expenses").textContent = "0.00";
         document.getElementById("balance").textContent = "0.00";
-
-        // Empty chart if no data
         renderExpensesChart([]);
       }
     });
