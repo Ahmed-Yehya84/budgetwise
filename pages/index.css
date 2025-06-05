@@ -22,7 +22,7 @@
 @import url(../blocks/transactions/transactions.css);
 @import url(../blocks/transactions/__title/transactions__title.css);
 @import url(../blocks/transactions/__table/transaction__table.css);
-@import url(../blocks/transactions/__td/transaction__td.css);
+@import url(../blocks/transactions/__td/transactions__td.css);
 @import url(../blocks/transactions/__th/transactions__th.css);
 @import url(../blocks/transactions/__delete-button/transactions__delete-button.css);
 /* charts */
