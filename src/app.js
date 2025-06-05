@@ -3,13 +3,14 @@ import { ref, push, onValue, remove } from "firebase/database";
 import { onAuthStateChanged } from "firebase/auth";
 import { showConfirmDialog } from "./notifications.js";
 import { showSuccessToast, showErrorToast } from "./toast.js";
-import { renderExpensesChart } from "./chart";
+import { renderExpensesChart } from "./chart.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("transaction-form");
   const description = document.getElementById("description");
   const amount = document.getElementById("amount");
   const type = document.getElementById("type");
+  const category = document.getElementById("category");
   const tbody = document.getElementById("transaction-list");
 
   if (!form || !description || !amount || !type || !tbody) {
@@ -34,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
         description: description.value.trim(),
         amount: parseFloat(amount.value),
         type: type.value,
+        category: category.value,
         timestamp: Date.now(),
       };
 
@@ -80,16 +82,17 @@ document.addEventListener("DOMContentLoaded", () => {
           if (tx.type === "income") totalIncome += tx.amount;
           if (tx.type === "expense") totalExpenses += tx.amount;
 
-          allTransactions.push(tx);
+          transactions.push(tx);
 
           const row = document.createElement("tr");
           row.innerHTML = `
+          <td class="transactions__td">${new Date(
+            tx.timestamp
+          ).toLocaleDateString()}</td>
             <td class="transactions__td">${tx.description}</td>
             <td class="transactions__td">${tx.amount.toFixed(2)}</td>
-            <td class="transactions__td">${tx.type}</td>
-            <td class="transactions__td">${new Date(
-              tx.timestamp
-            ).toLocaleDateString()}</td>
+           <td class="transactions__td">${tx.category || "—"}</td>
+            
             <td class="transactions__td">
               <button class="transactions__delete-button" data-id="${key}">🗑️ Delete</button>
             </td>

@@ -71,14 +71,14 @@
           <option value="income">Income</option>
           <option value="expense">Expense</option>
         </select>
-        <select class="transaction-form__select">
+        <select id="category" class="transaction-form__select">
           <option>Food</option>
           <option>Housing</option>
           <option>Transportation</option>
           <option>Entertainment</option>
           <option>Other</option>
         </select>
-        <input class="transaction-form__input" type="date" />
+        <!-- <input class="transaction-form__input" type="date" /> -->
         <button class="transaction-form__button" type="submit">
           Add Transaction
         </button>
@@ -105,8 +105,10 @@
 
     <section class="charts">
       <h2 class="charts__title">Spending Breakdown</h2>
-      <div id="pie-chart" class="charts__pie">[Pie Chart Placeholder]</div>
-      <div id="bar-chart" class="charts__bar">[Bar Chart Placeholder]</div>
+      <canvas class="charts__expenses" id="charts__expenses" width="400" height="400"></canvas>
+
+      <!-- <div id="pie-chart" class="charts__pie">[Pie Chart Placeholder]</div>
+      <div id="bar-chart" class="charts__bar">[Bar Chart Placeholder]</div> -->
     </section>
 
   </section>
