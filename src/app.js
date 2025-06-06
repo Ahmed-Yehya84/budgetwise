@@ -4,6 +4,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { showConfirmDialog } from "./notifications.js";
 import { showSuccessToast, showErrorToast } from "./toast.js";
 import { renderExpensesChart } from "./chart.js";
+import { setupPdfExport } from "./pdf.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("transaction-form");
@@ -27,6 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  setupPdfExport(monthFilter);
+
   onAuthStateChanged(auth, (user) => {
     if (!user) {
       console.warn("User not logged in.");
@@ -35,40 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const uid = user.uid;
     const userTransactionsRef = ref(db, `users/${uid}/transactions`);
-
-    // Add transaction to Firebase
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      const transaction = {
-        description: description.value.trim(),
-        amount: parseFloat(amount.value),
-        type: type.value,
-        category: category.value,
-        timestamp: dateInput.value
-          ? new Date(dateInput.value).getTime()
-          : Date.now(),
-      };
-
-      if (
-        !transaction.description ||
-        isNaN(transaction.amount) ||
-        !["income", "expense"].includes(transaction.type)
-      ) {
-        showErrorToast("Invalid transaction input.");
-        return;
-      }
-
-      push(userTransactionsRef, transaction)
-        .then(() => {
-          showSuccessToast("Transaction saved!");
-          form.reset();
-        })
-        .catch((error) => {
-          console.error("Error saving transaction:", error);
-          showErrorToast("Error saving transaction");
-        });
-    });
+    let allTransactions = {};
 
     function displayTransactions(data, selectedMonth = null) {
       tbody.innerHTML = "";
@@ -166,17 +136,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Initial load
     onValue(userTransactionsRef, (snapshot) => {
-      const data = snapshot.val();
-      displayTransactions(data, monthFilter?.value || null);
+      allTransactions = snapshot.val() || {};
+      displayTransactions(allTransactions, monthFilter?.value || null);
     });
 
-    // Month filter logic
+    // Filter logic
     if (monthFilter) {
       monthFilter.addEventListener("change", () => {
-        onValue(userTransactionsRef, (snapshot) => {
-          const data = snapshot.val();
-          displayTransactions(data, monthFilter.value);
-        });
+        displayTransactions(allTransactions, monthFilter.value);
       });
     }
   });
