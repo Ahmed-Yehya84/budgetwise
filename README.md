@@ -1,27 +1,48 @@
 # BudgetWise 💰
 
-BudgetWise is a simple and responsive budget tracker that lets you add, view, and delete your income and expenses in real time. All data is stored and retrieved using Firebase Realtime Database.
+**BudgetWise** is a modern, responsive budget tracker that helps you manage your income and expenses in real-time with a clean UI, powerful filtering, and seamless Firebase integration. Ideal for personal finance tracking across devices.
+
+---
 
 ## 🚀 Features
 
-- Add income and expenses with descriptions and timestamps.
-- Real-time display of transactions.
-- Live balance, total income, and total expenses calculations.
-- Delete transactions with confirmation popup (SweetAlert2).
-- Toast notifications for success and error feedback (Toastify).
-- Fully responsive and user-friendly UI.
-- Hosted via GitHub Pages.
+- ✅ Add income and expenses with:
+  - Description
+  - Amount
+  - Type (income/expense)
+  - Date (with backdating support)
+  - Category (optional)
+- ✅ Real-time syncing with Firebase Realtime Database
+- ✅ Chronological sorting of transactions
+- ✅ Monthly filter to view transactions by month
+- ✅ Live summary panel:
+  - Total Income
+  - Total Expenses
+  - Balance
+- ✅ Responsive transaction chart (using Chart.js)
+- ✅ Delete individual transactions with confirmation (SweetAlert2)
+- ✅ Clear all transactions with confirmation
+- ✅ Toast notifications for success/error (Toastify)
+- ✅ PDF export of the selected month’s transactions and chart
+- ✅ Toggle between Dark Mode / Light Mode with BEM-based theme switching
+- ✅ Skeleton loader while fetching data
+- ✅ Clean UI, mobile-first design
 
-## 🛠️ Technologies
+---
 
-- HTML5 / CSS3
-- JavaScript (ES6+)
-- Firebase Realtime Database
-- Webpack
-- Toastify JS
-- SweetAlert2
+## 🛠️ Built With
 
-## 📦 Installation
+- **HTML5** / **CSS3**
+- **JavaScript (ES6+)**
+- **Firebase Realtime Database + Firebase Auth**
+- **Chart.js**
+- **Toastify JS**
+- **SweetAlert2**
+- **Webpack**
+
+---
+
+## 📦 Installation & Setup
 
 1. Clone the repo:
 
@@ -29,6 +50,8 @@ BudgetWise is a simple and responsive budget tracker that lets you add, view, an
    git clone https://github.com/your-username/budgetwise.git
    cd budgetwise
    ```
+
+```
 
 2. Install dependencies:
 
@@ -39,11 +62,50 @@ BudgetWise is a simple and responsive budget tracker that lets you add, view, an
     npm start
 
 🔥 Firebase Setup
-Update firebase.js with your Firebase project credentials and ensure the Realtime Database is enabled.
+BudgetWise uses Firebase Realtime Database and Authentication.
+
+Create a Firebase project at console.firebase.google.com
+
+Enable Email/Password authentication.
+
+Enable Realtime Database and set rules to allow authenticated read/write.
+
+Replace firebaseConfig in firebase.js with your project’s credentials:
+
+// firebase.js
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  ...
+};
+
+📄 PDF Export
+You can download a monthly expense report as a PDF by clicking the PDF icon in the footer. It includes:
+
+All filtered transactions
+
+Total income, expenses, and balance
+
+A visual chart summary
+
+🌙 Theme Toggle
+Switch between light and dark modes from the UI toggle. Your preference is stored and applied automatically.
 
 🧪 Testing
-Transactions are saved and loaded via Firebase.
+Add/remove transactions and verify live updates.
 
-Toastify will display success and error messages.
+Try different months via the filter.
 
-SweetAlert2 prompts before deleting transactions.
+Test delete confirmation popups and Clear All functionality.
+
+Export as PDF and verify file content.
+
+Toggle themes to check UI consistency.
+
+🧠 Credits
+Developed with ❤️ using Firebase, Webpack, and pure JavaScript.
+
+🌐 Live Demo
+
+https://ahmed-yehya84.github.io/budgetwise/
+```
