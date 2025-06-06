@@ -2,7 +2,7 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
 export function setupPdfExport(monthFilter) {
-  const exportButton = document.getElementById("export-csv");
+  const exportButton = document.getElementById("export-pdf");
   exportButton.textContent = "Download PDF";
 
   exportButton.addEventListener("click", async () => {
