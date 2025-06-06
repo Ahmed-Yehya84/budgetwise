@@ -7,3 +7,12 @@
   flex: 1 1 30%;
   text-align: center;
 }
+
+.summary__card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.summary__card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}

@@ -5,3 +5,11 @@
   background-color: var(--bg-color);
   color: var(--text-color);
 }
+
+.root,
+.main--dark,
+.main--light,
+.main--dark *,
+.main--light * {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

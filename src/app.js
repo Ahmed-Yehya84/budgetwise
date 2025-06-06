@@ -53,6 +53,14 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    // 👇 Show the app and trigger animation
+    const appSection = document.getElementById("app");
+    if (appSection) {
+      appSection.style.display = "block";
+      requestAnimationFrame(() => {
+        appSection.classList.add("visible");
+      });
+    }
     const uid = user.uid;
     const userTransactionsRef = ref(db, `users/${uid}/transactions`);
     let allTransactions = {};

@@ -7,3 +7,19 @@
   border-radius: 5px;
   cursor: pointer;
 }
+
+.footer__button,
+.transaction-form__button {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.footer__button:hover,
+.transaction-form__button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.footer__button:active,
+.transaction-form__button:active {
+  transform: scale(0.95);
+}
