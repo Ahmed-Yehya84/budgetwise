@@ -27,6 +27,10 @@
 @import url(../blocks/transactions/__td/transactions__td.css);
 @import url(../blocks/transactions/__th/transactions__th.css);
 @import url(../blocks/transactions/__delete-button/transactions__delete-button.css);
+
+/* spinner  */
+@import url(../blocks/transaction-skeleton/__row/transaction-skeleton__row.css);
+@import url(../blocks/transaction-skeleton/__cell/transaction-skeleton__cell.css);
 /* charts */
 @import url(../blocks/charts/charts.css);
 @import url(../blocks/charts/__title/charts__title.css);

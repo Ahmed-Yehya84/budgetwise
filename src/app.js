@@ -16,6 +16,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const tbody = document.getElementById("transaction-list");
   const monthFilter = document.getElementById("month-filter");
 
+  function showSkeletonLoading(target, rows = 5, cols = 5) {
+    target.innerHTML = "";
+    for (let i = 0; i < rows; i++) {
+      const row = document.createElement("tr");
+      row.classList.add("skeleton-row");
+      for (let j = 0; j < cols; j++) {
+        const cell = document.createElement("td");
+        cell.classList.add("skeleton-cell");
+        row.appendChild(cell);
+      }
+      target.appendChild(row);
+    }
+  }
+
   if (monthFilter && !monthFilter.value) {
     const today = new Date();
     const yyyy = today.getFullYear();
@@ -134,13 +148,14 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // Initial load
+    // Show skeleton while loading data
+    showSkeletonLoading(tbody);
+
     onValue(userTransactionsRef, (snapshot) => {
       allTransactions = snapshot.val() || {};
       displayTransactions(allTransactions, monthFilter?.value || null);
     });
 
-    // Filter logic
     if (monthFilter) {
       monthFilter.addEventListener("change", () => {
         displayTransactions(allTransactions, monthFilter.value);
