@@ -23,8 +23,7 @@
 
 /* Inputs and Selects */
 .main--dark input,
-.main--dark select,
-.main--dark button {
+.main--dark select {
   background-color: #2c2c2c;
   color: #f5f5f5;
   border: 1px solid #444;
@@ -65,4 +64,19 @@
 /* Skeleton Row Styling */
 .main--dark .transaction-skeleton__cell {
   background-color: #2c2c2c;
+}
+
+/* Delete button in Dark Mode */
+.main--dark .transactions__delete-button {
+  background-color: #2a0000; /* Dark red tone */
+  color: #ff6b6b; /* Bright red text */
+  border: 1px solid #ff6b6b;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.main--dark .transactions__delete-button:hover {
+  background-color: #3c0000;
 }

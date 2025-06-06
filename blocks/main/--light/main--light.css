@@ -22,8 +22,7 @@
 
 /* Inputs and Selects */
 .main--light input,
-.main--light select,
-.main--light button {
+.main--light select {
   background-color: #ffffff;
   color: #121212;
   border: 1px solid #ccc;
@@ -64,4 +63,19 @@
 /* Skeleton Row Styling */
 .main--light .transaction-skeleton__cell {
   background-color: #eeeeee;
+}
+
+/* Delete button in Light Mode */
+.main--light .transactions__delete-button {
+  background-color: #ffebee; /* Soft red background */
+  color: #c62828; /* Deep red text */
+  border: 1px solid #c62828;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.main--light .transactions__delete-button:hover {
+  background-color: #ffcdd2;
 }
