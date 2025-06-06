@@ -20,10 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
     target.innerHTML = "";
     for (let i = 0; i < rows; i++) {
       const row = document.createElement("tr");
-      row.classList.add("skeleton-row");
+      row.classList.add("transaction-skeleton__row");
       for (let j = 0; j < cols; j++) {
         const cell = document.createElement("td");
-        cell.classList.add("skeleton-cell");
+        cell.classList.add("transaction-skeleton__cell");
         row.appendChild(cell);
       }
       target.appendChild(row);
