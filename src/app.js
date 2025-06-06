@@ -15,6 +15,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const tbody = document.getElementById("transaction-list");
   const monthFilter = document.getElementById("month-filter");
 
+  if (monthFilter && !monthFilter.value) {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
+    monthFilter.value = `${yyyy}-${mm}`;
+  }
+
   if (!form || !description || !amount || !type || !tbody) {
     console.error("Missing form elements");
     return;
