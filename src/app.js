@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  setupPdfExport(monthFilter);
+  setupPdfExport(monthFilter); // 👈 Only calling PDF download
 
   onAuthStateChanged(auth, (user) => {
     if (!user) {

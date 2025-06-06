@@ -4,6 +4,7 @@
   "homepage": "https://ahmed-yehya84.github.io/budgetwise/",
   "dependencies": {
     "chart.js": "^4.4.9",
+    "emailjs-com": "^3.2.0",
     "firebase": "^11.8.1",
     "html2pdf.js": "^0.10.3",
     "sweetalert2": "^11.22.0",
