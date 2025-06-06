@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  setupPdfExport(monthFilter); // 👈 Only calling PDF download
+  setupPdfExport(monthFilter);
 
   onAuthStateChanged(auth, (user) => {
     if (!user) {
@@ -53,7 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // 👇 Show the app and trigger animation
     const appSection = document.getElementById("app");
     if (appSection) {
       appSection.style.display = "block";
@@ -61,15 +60,26 @@ document.addEventListener("DOMContentLoaded", () => {
         appSection.classList.add("visible");
       });
     }
+
     const uid = user.uid;
     const userTransactionsRef = ref(db, `users/${uid}/transactions`);
-    let allTransactions = {};
+    let transactions = {};
+
+    const clearAllButton = document.getElementById("clear-data");
+
+    function updateClearAllVisibility(hasTransactions) {
+      if (clearAllButton) {
+        clearAllButton.style.display = hasTransactions
+          ? "inline-block"
+          : "none";
+      }
+    }
 
     function displayTransactions(data, selectedMonth = null) {
       tbody.innerHTML = "";
       let totalIncome = 0;
       let totalExpenses = 0;
-      const transactions = [];
+      const transactionsForChart = [];
 
       if (data) {
         Object.entries(data)
@@ -94,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (tx.type === "income") totalIncome += tx.amount;
             if (tx.type === "expense") totalExpenses += tx.amount;
 
-            transactions.push(tx);
+            transactionsForChart.push(tx);
 
             const row = document.createElement("tr");
             row.innerHTML = `
@@ -149,28 +159,96 @@ document.addEventListener("DOMContentLoaded", () => {
             });
           });
 
-        renderExpensesChart(transactions);
+        renderExpensesChart(transactionsForChart);
+        updateClearAllVisibility(transactionsForChart.length > 0);
       } else {
         tbody.innerHTML = `<tr><td colspan="5" class="transactions__td">No transactions found.</td></tr>`;
         document.getElementById("total-income").textContent = "0.00";
         document.getElementById("total-expenses").textContent = "0.00";
         document.getElementById("balance").textContent = "0.00";
         renderExpensesChart([]);
+        updateClearAllVisibility(false);
       }
     }
 
-    // Show skeleton while loading data
     showSkeletonLoading(tbody);
 
     onValue(userTransactionsRef, (snapshot) => {
-      allTransactions = snapshot.val() || {};
-      displayTransactions(allTransactions, monthFilter?.value || null);
+      transactions = snapshot.val() || {};
+      displayTransactions(transactions, monthFilter?.value || null);
     });
 
     if (monthFilter) {
       monthFilter.addEventListener("change", () => {
-        displayTransactions(allTransactions, monthFilter.value);
+        displayTransactions(transactions, monthFilter.value);
       });
     }
+
+    if (clearAllButton) {
+      clearAllButton.addEventListener("click", () => {
+        showConfirmDialog({
+          title: "Are you absolutely sure?",
+          text: "This will permanently delete all your transactions. This action cannot be undone!",
+          confirmButtonText: "Yes, delete everything!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            clearAllButton.disabled = true;
+            const originalText = clearAllButton.textContent;
+            clearAllButton.textContent = "Deleting...";
+
+            remove(userTransactionsRef)
+              .then(() =>
+                showSuccessToast("All transactions deleted successfully!")
+              )
+              .catch((error) => {
+                console.error("Clear All failed:", error);
+                showErrorToast("Failed to delete transactions.");
+              })
+              .finally(() => {
+                clearAllButton.disabled = false;
+                clearAllButton.textContent = originalText;
+              });
+          }
+        });
+      });
+    }
+
+    // ✅ Add transaction
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const desc = description.value.trim();
+      const amt = parseFloat(amount.value);
+      const selectedType = type.value;
+      const categoryVal = category.value;
+      const dateVal = dateInput.value;
+
+      if (!desc || isNaN(amt) || !selectedType || !dateVal) {
+        showErrorToast("Please fill in all fields correctly.");
+        return;
+      }
+
+      const timestamp = new Date(dateVal).getTime();
+      const newTransaction = {
+        description: desc,
+        amount: amt,
+        type: selectedType,
+        category: categoryVal,
+        timestamp,
+      };
+
+      push(ref(db, `users/${uid}/transactions`), newTransaction)
+        .then(() => {
+          showSuccessToast("Transaction added!");
+          form.reset();
+          // ✅ Clear the date to show placeholder
+          setTimeout(() => {
+            dateInput.value = "";
+          }, 0);
+        })
+        .catch((error) => {
+          console.error("Add transaction error:", error);
+          showErrorToast("Failed to add transaction.");
+        });
+    });
   });
 });
