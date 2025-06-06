@@ -1,0 +1,68 @@
+.main--dark {
+  background-color: #121212;
+  color: #f5f5f5;
+}
+
+/* Global transitions for smoother theme changes */
+.main--dark * {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Section Backgrounds */
+.main--dark .header,
+.main--dark .footer,
+.main--dark .summary,
+.main--dark .summary__card,
+.main--dark .transaction-form,
+.main--dark .transactions,
+.main--dark .charts,
+.main--dark .filter {
+  background-color: #1e1e1e;
+  color: #f5f5f5;
+}
+
+/* Inputs and Selects */
+.main--dark input,
+.main--dark select,
+.main--dark button {
+  background-color: #2c2c2c;
+  color: #f5f5f5;
+  border: 1px solid #444;
+}
+
+.main--dark input::placeholder {
+  color: #aaa;
+}
+
+/* Filter Input */
+.main--dark .filter__month {
+  background-color: #2c2c2c;
+  color: #f5f5f5;
+  border: 1px solid #444;
+}
+
+/* Transaction Form Button */
+.main--dark .transaction-form__button {
+  background-color: #2c2c2c;
+  color: #f5f5f5;
+  border: 1px solid #444;
+}
+
+/* Transactions Table */
+.main--dark .transactions__table {
+  background-color: #1e1e1e;
+  color: #f5f5f5;
+  border-collapse: collapse;
+}
+
+.main--dark .transactions__th,
+.main--dark .transactions__td {
+  background-color: #1e1e1e;
+  color: #f5f5f5;
+  border: 1px solid #444;
+}
+
+/* Skeleton Row Styling */
+.main--dark .transaction-skeleton__cell {
+  background-color: #2c2c2c;
+}

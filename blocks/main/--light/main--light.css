@@ -1,0 +1,67 @@
+.main--light {
+  background-color: #ffffff;
+  color: #121212;
+}
+
+/* Global transitions for smooth toggling */
+.main--light * {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Section Backgrounds */
+.main--light .header,
+.main--light .footer,
+.main--light .summary,
+.main--light .transaction-form,
+.main--light .transactions,
+.main--light .charts,
+.main--light .filter {
+  background-color: #f9f9f9;
+  color: #121212;
+}
+
+/* Inputs and Selects */
+.main--light input,
+.main--light select,
+.main--light button {
+  background-color: #ffffff;
+  color: #121212;
+  border: 1px solid #ccc;
+}
+
+.main--light input::placeholder {
+  color: #888;
+}
+
+/* Filter Input */
+.main--light .filter__month {
+  background-color: #ffffff;
+  color: #121212;
+  border: 1px solid #ccc;
+}
+
+/* Transaction Form Button */
+.main--light .transaction-form__button {
+  background-color: #ffffff;
+  color: #121212;
+  border: 1px solid #ccc;
+}
+
+/* Transactions Table */
+.main--light .transactions__table {
+  background-color: #f9f9f9;
+  color: #121212;
+  border-collapse: collapse;
+}
+
+.main--light .transactions__th,
+.main--light .transactions__td {
+  background-color: #ffffff;
+  color: #121212;
+  border: 1px solid #ccc;
+}
+
+/* Skeleton Row Styling */
+.main--light .transaction-skeleton__cell {
+  background-color: #eeeeee;
+}

@@ -5,8 +5,11 @@ import { showConfirmDialog } from "./notifications.js";
 import { showSuccessToast, showErrorToast } from "./toast.js";
 import { renderExpensesChart } from "./chart.js";
 import { setupPdfExport } from "./pdf.js";
+import { setupThemeToggle } from "./toggle-theme.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+  setupThemeToggle();
+
   const form = document.getElementById("transaction-form");
   const description = document.getElementById("description");
   const amount = document.getElementById("amount");
