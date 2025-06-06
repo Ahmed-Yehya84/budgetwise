@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const dateInput = document.getElementById("date");
   const category = document.getElementById("category");
   const tbody = document.getElementById("transaction-list");
+  const monthFilter = document.getElementById("month-filter");
 
   if (!form || !description || !amount || !type || !tbody) {
     console.error("Missing form elements");
@@ -62,47 +63,53 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Read and display transactions (sorted by date)
-    onValue(userTransactionsRef, (snapshot) => {
-      const data = snapshot.val();
+    function displayTransactions(data, selectedMonth = null) {
       tbody.innerHTML = "";
-
       let totalIncome = 0;
       let totalExpenses = 0;
-
       const transactions = [];
 
       if (data) {
-        const sortedEntries = Object.entries(data).sort(([, a], [, b]) => {
-          return a.timestamp - b.timestamp; // Ascending (oldest to newest)
-        });
+        Object.entries(data)
+          .map(([key, tx]) => ({ id: key, ...tx }))
+          .filter((tx) => {
+            if (!selectedMonth) return true;
+            const txDate = new Date(tx.timestamp);
+            const [year, month] = selectedMonth.split("-");
+            return (
+              txDate.getFullYear() === parseInt(year) &&
+              txDate.getMonth() + 1 === parseInt(month)
+            );
+          })
+          .sort((a, b) => a.timestamp - b.timestamp)
+          .forEach((tx) => {
+            if (
+              typeof tx.amount !== "number" ||
+              !["income", "expense"].includes(tx.type)
+            )
+              return;
 
-        sortedEntries.forEach(([key, tx]) => {
-          if (
-            typeof tx.amount !== "number" ||
-            !["income", "expense"].includes(tx.type)
-          )
-            return;
+            if (tx.type === "income") totalIncome += tx.amount;
+            if (tx.type === "expense") totalExpenses += tx.amount;
 
-          if (tx.type === "income") totalIncome += tx.amount;
-          if (tx.type === "expense") totalExpenses += tx.amount;
+            transactions.push(tx);
 
-          transactions.push(tx);
-
-          const row = document.createElement("tr");
-          row.innerHTML = `
-            <td class="transactions__td">${new Date(
-              tx.timestamp
-            ).toLocaleDateString()}</td>
-            <td class="transactions__td">${tx.description}</td>
-            <td class="transactions__td">${tx.amount.toFixed(2)}</td>
-            <td class="transactions__td">${tx.category || "—"}</td>
-            <td class="transactions__td">
-              <button class="transactions__delete-button" data-id="${key}">🗑️ Delete</button>
-            </td>
-          `;
-          tbody.appendChild(row);
-        });
+            const row = document.createElement("tr");
+            row.innerHTML = `
+              <td class="transactions__td">${new Date(
+                tx.timestamp
+              ).toLocaleDateString()}</td>
+              <td class="transactions__td">${tx.description}</td>
+              <td class="transactions__td">${tx.amount.toFixed(2)}</td>
+              <td class="transactions__td">${tx.category || "—"}</td>
+              <td class="transactions__td">
+                <button class="transactions__delete-button" data-id="${
+                  tx.id
+                }">🗑️ Delete</button>
+              </td>
+            `;
+            tbody.appendChild(row);
+          });
 
         document.getElementById("total-income").textContent =
           totalIncome.toFixed(2);
@@ -117,7 +124,6 @@ document.addEventListener("DOMContentLoaded", () => {
           .forEach((button) => {
             button.addEventListener("click", () => {
               const key = button.getAttribute("data-id");
-
               showConfirmDialog({
                 title: "Are you sure?",
                 text: "This transaction will be permanently deleted!",
@@ -149,6 +155,22 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("balance").textContent = "0.00";
         renderExpensesChart([]);
       }
+    }
+
+    // Initial load
+    onValue(userTransactionsRef, (snapshot) => {
+      const data = snapshot.val();
+      displayTransactions(data, monthFilter?.value || null);
     });
+
+    // Month filter logic
+    if (monthFilter) {
+      monthFilter.addEventListener("change", () => {
+        onValue(userTransactionsRef, (snapshot) => {
+          const data = snapshot.val();
+          displayTransactions(data, monthFilter.value);
+        });
+      });
+    }
   });
 });

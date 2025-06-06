@@ -17,6 +17,8 @@
 @import url(../blocks/transaction-form/__select/transaction-form__select.css);
 @import url(../blocks/transaction-form/__button/transaction-form__button.css);
 
+/* filter */
+@import url(../blocks/filter/filter.css);
 /* transactions */
 
 @import url(../blocks/transactions/transactions.css);
