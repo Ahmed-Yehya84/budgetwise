@@ -1,0 +1,78 @@
+/* ===== Responsive Enhancements for BudgetWise ===== */
+
+@media (max-width: 768px) {
+  /* Header and Footer */
+  .header__title {
+    font-size: 1.5rem;
+  }
+  .header__tagline {
+    font-size: 1rem;
+  }
+  .footer {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .footer__button {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Summary Cards */
+  .summary {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .summary__card {
+    width: 100%;
+    text-align: center;
+    font-size: 1.1rem;
+  }
+
+  /* Auth Forms */
+  .auth-section input,
+  .auth-section button {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  /* Transaction Form */
+  .transaction-form__form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .transaction-form__input,
+  .transaction-form__select,
+  .transaction-form__button {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  /* Filter Section */
+  .filter {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .filter__month {
+    width: 100%;
+  }
+
+  /* Transaction Table */
+  .transactions__table {
+    font-size: 0.85rem;
+    min-width: 600px; /* Keep horizontal scroll for wide content */
+  }
+
+  /* Charts Section */
+  .charts__expenses {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100%;
+  }
+
+  /* Hide chart titles on small devices if needed */
+  .charts__title {
+    font-size: 1.1rem;
+  }
+}
