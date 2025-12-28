@@ -1,151 +1,80 @@
-# BudgetWise 💰
+# BudgetWise 💰 | Smart Financial Tracker
 
-**BudgetWise** is a modern, responsive budget tracker that helps you manage your income and expenses in real-time with a clean UI, powerful filtering, and seamless Firebase integration. Ideal for tracking personal finances across devices.
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase)
+![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![Chart.js](https://img.shields.io/badge/chart.js-F5788D.svg?style=for-the-badge&logo=chart.js&logoColor=white)
 
----
+BudgetWise is a high-performance, responsive budget management application. It bridges the gap between simple spreadsheets and complex banking apps, offering real-time data synchronization, visual analytics, and professional reporting.
 
-## 🚀 Features
-
-- ✅ Add income and expenses with:
-
-- Description
-
-- Amount
-
-- Type (income/expense)
-
-- Date (with backdating support)
-
-- Category (optional)
-
-- ✅ Real-time syncing with Firebase Realtime Database
-
-- ✅ Chronological sorting of transactions
-
-- ✅ Monthly filter to view transactions by month
-
-- ✅ Live summary panel:
-
-- Total Income
-
-- Total Expenses
-
-- Balance
-
-- ✅ Responsive transaction chart (using Chart.js)
-
-- ✅ Delete individual transactions with confirmation (SweetAlert2)
-
-- ✅ Clear all transactions with confirmation
-
-- ✅ Toast notifications for success/error (Toastify)
-
-- ✅ PDF export of the selected month's transactions and chart
-
-- ✅ Toggle between Dark Mode / Light Mode with BEM-based theme switching
-
-- ✅ Skeleton loader while fetching data
-
-- ✅ Clean UI, mobile-first design
+🌐 **[Live Demo](https://ahmed-yehya84.github.io/budgetwise/)**
 
 ---
 
-## 🛠️ Built With
+### 🚀 Key Features
 
-- **HTML5** / **CSS3**
-
-- **JavaScript (ES6+)**
-
-- **Firebase Realtime Database + Firebase Auth**
-
-- **Chart.js**
-
-- **Toastify JS**
-
-- **SweetAlert2**
-
-- **Webpack**
+- **Real-Time Data Engine:** Seamlessly synced with **Firebase Realtime Database** for instant updates across all devices.
+- **Visual Analytics:** Dynamic financial overview using **Chart.js** to visualize income vs. expense ratios.
+- **Professional Reporting:** One-click **PDF Export** functionality that generates a comprehensive monthly report including transaction history and charts.
+- **Advanced Filtering:** Chronological sorting and month-by-month deep dives into spending habits.
+- **Modern UI/UX:** - **Dark/Light Mode:** Custom BEM-based theme switching with persistent user preference.
+  - **Interactive Feedback:** Integrated **SweetAlert2** for destructive actions and **Toastify** for non-blocking notifications.
+  - **Skeleton Loading:** Professional perceived performance during data fetching.
 
 ---
 
-## 📦 Installation & Setup
+### 🛠️ Technical Stack & Architecture
 
-1\. Clone the repo:
+- **Core:** Vanilla JavaScript (ES6+) focusing on modular architecture.
+- **Backend-as-a-Service:** Firebase (Auth & Realtime Database) for secure, scalable data persistence.
+- **Styling:** CSS3 using **BEM Methodology** for maintainable and scalable styles.
+- **Build Tool:** **Webpack** for optimized asset bundling and dependency management.
+- **Reporting:** Client-side PDF generation for data privacy.
+
+---
+
+### 📦 Installation & Firebase Setup
+
+To run this project locally, follow these steps:
 
 ```bash
-
-git clone https://github.com/your-username/budgetwise.git
-
+# 1. Clone the repository
+git clone https://github.com/Ahmed-Yehya84/budgetwise.git
 cd budgetwise
 
-```
-
-```
-
-2\. Install dependencies:
-
+# 2. Install dependencies
 npm install
 
-3. Start the development server:
-
+# 3. Start the development server
 npm start
+```
 
-🔥 Firebase Setup
-
-BudgetWise uses Firebase Realtime Database and Authentication.
-
-Create a Firebase project at console.firebase.google.com
-
-Enable Email/Password authentication.
-
-Enable the Realtime Database and set rules to allow authenticated read/write access.
-
-Replace firebaseConfig in firebase.js with your project's credentials:
-
-// firebase.js
-
-const firebaseConfig = {
-
-apiKey: "YOUR_API_KEY",
-
-authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-
-...
-
-};
-
-📄 PDF Export
-
-You can download a monthly expense report as a PDF by clicking the PDF icon in the footer. It includes:
-
-All filtered transactions
-
-Total income, expenses, and balance
-
-A visual chart summary
-
-🌙 Theme Toggle
-
-Switch between light and dark modes from the UI toggle. Your preference is stored and applied automatically.
-
-🧪 Testing
-
-Add/remove transactions and verify live updates.
-
-Try different months via the filter.
-
-Test delete confirmation popups and Clear All functionality.
-
-Export as PDF and verify file content.
-
-Toggle themes to check UI consistency.
-
-🧠 Credits
-
-Developed with ❤️ using Firebase, Webpack, and pure JavaScript.
-
-🌐 Live Demo
-
-https://ahmed-yehya84.github.io/budgetwise/
+Firebase Configuration: BudgetWise uses Firebase Realtime Database and Authentication. Create a project at console.firebase.google.com and replace the configuration in src/utils/firebase.js with your credentials:
 
 ```
+const firebaseConfig = {
+apiKey: "YOUR_API_KEY",
+authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+databaseURL: "YOUR_DATABASE_URL",
+projectId: "YOUR_PROJECT_ID",
+storageBucket: "YOUR_STORAGE_BUCKET",
+messagingSenderId: "YOUR_SENDER_ID",
+appId: "YOUR_APP_ID"
+};
+```
+
+---
+
+### 📄 PDF Export & Themes
+
+- **Reporting:** Download a monthly expense report as a PDF by clicking the PDF icon in the footer. It includes all filtered transactions, a visual chart summary, and financial totals.
+- **Theme Toggle:** Switch between light and dark modes. Your preference is stored in `localStorage` and applied automatically on your next visit.
+
+### 🧠 Strategic Implementation
+
+In this project, I focused on **Clean Code** principles by separating the data logic (Firebase) from the UI rendering. By implementing a custom theme-switching engine and a JSON-like filtering system, I ensured the app remains lightweight while providing a "Premium App" feel.
+
+---
+
+**Developed with ❤️ by [Ahmed Yehya](https://github.com/Ahmed-Yehya84)**
