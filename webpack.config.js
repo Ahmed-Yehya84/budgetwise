@@ -25,7 +25,9 @@ module.exports = {
       title: "BudgetWise App",
     }),
 
-    new Dotenv(),
+    new Dotenv({
+      systemvars: true,
+    }),
   ],
   module: {
     rules: [
